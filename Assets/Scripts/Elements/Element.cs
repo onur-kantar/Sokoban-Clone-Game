@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Element : MonoBehaviour
@@ -15,7 +14,10 @@ public class Element : MonoBehaviour
         this.gridGenerator = gridGenerator;
         this.currentPosition = currentPosition;
     }
-    
+    public virtual bool Interaction(GameObject other, Vector2 direction)
+    {
+        return false;
+    }
 }
 public enum Elements { Floor, Wall, Ball, Hole, GreenZone, BlueZone, GreenCube, BlueCube };
 public enum ColorEnum { Blue, Green };

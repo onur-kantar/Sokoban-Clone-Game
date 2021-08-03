@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Zone : Element, ICanInteract
+public class Zone : Element
 {
     [SerializeField] ColorEnum color;
+    [SerializeField] GameObject CollectPS;
     GameManager gameManager;
     private void Start()
     {
         gameManager = gridGenerator.gameManager;
         gameManager.IncreaseZoneCount();
     }
-    public bool Interaction(GameObject other)
+    public override bool Interaction(GameObject other, Vector2 direction)
     {
-        Vector2 direction = currentPosition - other.GetComponent<Element>().currentPosition;
         if (other.GetComponent<Movement>().Move(direction))
         {
             Cube cube = other.GetComponent<Cube>();
@@ -23,6 +21,7 @@ public class Zone : Element, ICanInteract
                 {
                     other.GetComponent<Movement>().enabled = false;
                     cube.enabled = false;
+                    Instantiate(CollectPS, transform.position, CollectPS.transform.rotation);
                     gameManager.DecreaseZoneCount();
                 }
             }

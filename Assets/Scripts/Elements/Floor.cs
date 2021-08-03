@@ -1,16 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Floor : Element, ICanInteract
+public class Floor : Element
 {
-    public bool Interaction(GameObject other)
+    public override bool Interaction(GameObject other, Vector2 direction)
     {
-        Vector2 direction = currentPosition - other.GetComponent<Element>().currentPosition;
-        if (other.GetComponent<Movement>().Move(direction))
-        {
-            return true;
-        }
-        return false;
+        return other.GetComponent<Movement>().Move(direction);
     }
 }

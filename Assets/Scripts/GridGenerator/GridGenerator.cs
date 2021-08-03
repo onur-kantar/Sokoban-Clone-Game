@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class GridGenerator : MonoBehaviour
 {
     [HideInInspector] public GameManager gameManager;
@@ -36,21 +30,19 @@ public class GridGenerator : MonoBehaviour
 
         float screenRatio = Camera.main.aspect;
         float targetRatio = (float)column / (float)row;
-
         if (screenRatio >= targetRatio)
         {
-            Camera.main.orthographicSize = ((float)row);
+            Camera.main.orthographicSize = (float)row;
         }
         else
         {
             float differenceInSize = targetRatio / screenRatio;
-            Camera.main.orthographicSize = ((float)row) * differenceInSize;
+            Camera.main.orthographicSize = (float)row * differenceInSize;
         }
     }
     public void FillGridArray()
     {
         gridArray = new GridCell[column, row];
-
         foreach (Transform child in transform)
         {
             Element element = child.GetComponent<Element>();
@@ -71,7 +63,7 @@ public class GridGenerator : MonoBehaviour
         }
         DestroySpecificChildren(gridArray[((int)updatePosition.x), ((int)updatePosition.y)].goList);
         GameObject go = CreateElement(FindElement(updateElement), updatePosition);
-        if (go.GetComponent<Movement>() && hasLimit)// Düzenle
+        if (go.GetComponent<Movement>() && hasLimit)
         {
             go.GetComponent<Movement>().CreateLimit(limitTextGO, limitCount);
         }
@@ -126,13 +118,11 @@ public class GridGenerator : MonoBehaviour
     }
     GameObject InstantiateElement(GameObject element, Vector2 position, List<GameObject> tempList)
     {
-        GameObject go = Instantiate(element, position * 2, element.transform.rotation);
+        GameObject go = Instantiate(element, position * Constants.ELEMENT_SIZE, element.transform.rotation);
         go.transform.localPosition += element.transform.localPosition;
         go.transform.parent = transform;
         go.GetComponent<Element>().SetProperties(this, position);
         tempList.Add(go);
-
-
         return go;
     }
     void DestroyAllChildren()
@@ -154,51 +144,4 @@ public class GridGenerator : MonoBehaviour
             DestroyImmediate(goListItem);
         }
     }
-    //public void SaveGridArray()
-    //{
-    //    Scene activeScene = SceneManager.GetActiveScene();
-    //    StreamWriter sw = new StreamWriter(@"D:\UnityProjects\SOKOBAN\Assets\"+ activeScene.name + ".txt");
-
-    //    for (int y = gridArray.GetLength(1) - 1; y >= 0; y--)
-    //    {
-    //        for (int x = 0; x < gridArray.GetLength(0); x++)
-    //        {
-    //            sw.Write(((int)gridArray[x, y].goList[0].GetComponent<Element>().ElementName));
-    //            if (x == gridArray.GetLength(0) - 1)
-    //                break;
-                
-    //            sw.Write(".");
-    //        }
-    //        if (y == 0)
-    //            break;
-    //        sw.WriteLine();
-    //    }
-    //    sw.Close();
-    //}
-    //public void LoadGridArray()
-    //{
-
-    //    Scene activeScene = SceneManager.GetActiveScene();
-    //    StreamReader sr = new StreamReader(@"D:\UnityProjects\SOKOBAN\Assets\" + activeScene.name + ".txt");
-    //    var lines = sr.ReadToEnd().Split(new string[] { "\r\n" }, StringSplitOptions.None);
-    //    int row = lines.Length;
-    //    int column = lines[0].Split('.').Length;
-    //    gridArray = new GridCell[column, row];
-
-    //    DestroyAllChildren();
-    //    int x = 0;
-    //    int y = row - 1;
-    //    foreach (string line in lines)
-    //    {
-    //        foreach (string character in line.Split('.'))
-    //        {
-    //            Elements element = (Elements)Int32.Parse(character);
-    //            CreateElement(FindElement(element), new Vector2(x, y));
-    //            x++;
-    //        }
-    //        x = 0;
-    //        y--;
-    //    }
-    //    sr.Close();
-    //}
 }

@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Hole : Element, ICanInteract
+public class Hole : Element
 {
-    public bool Interaction(GameObject other)
+    public override bool Interaction(GameObject other, Vector2 direction)
     {
-        Vector2 direction = currentPosition - other.GetComponent<Element>().currentPosition;
         if (other.GetComponent<Movement>().Move(direction))
         {
             other.GetComponent<Movement>().Fall();

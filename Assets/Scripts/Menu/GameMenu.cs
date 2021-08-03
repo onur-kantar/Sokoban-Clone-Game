@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,11 +13,11 @@ public class GameMenu : MonoBehaviour
     {
         gameManager = GetComponent<GameManager>();
         activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        PlayerPrefs.SetInt("level", activeSceneIndex);
+        PlayerPrefs.SetInt(Constants.LEVEL_SAVE_NAME, activeSceneIndex);
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !winGamePanel.activeSelf)
         {
             if (stopGamePanel.activeSelf)
             {
@@ -35,8 +33,8 @@ public class GameMenu : MonoBehaviour
     }
     public void ShowWinGamePanel()
     {
-        winGameText.text = string.Format("LEVEL {0} COMPLATED", activeSceneIndex);
-        PlayerPrefs.SetInt("level", activeSceneIndex + 1);
+        winGameText.text = string.Format(Constants.LEVEL_COMPLATED_TEXT, activeSceneIndex);
+        PlayerPrefs.SetInt(Constants.LEVEL_SAVE_NAME, activeSceneIndex + 1);
         winGamePanel.SetActive(true);
     }
     public void NextLevel()

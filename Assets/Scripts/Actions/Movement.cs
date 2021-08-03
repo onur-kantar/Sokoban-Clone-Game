@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using TMPro;
 public class Movement : MonoBehaviour
 {
     [HideInInspector] public bool hasFallen;
-    Element element;
     [SerializeField] GameObject limitTextGO;
     [SerializeField] int limitCount;
+    Element element;
     TMP_Text limitText;
     private void Start()
     {
@@ -21,7 +18,6 @@ public class Movement : MonoBehaviour
         this.limitTextGO = Instantiate(limitTextGO, transform.position, Quaternion.identity);
         this.limitTextGO.transform.SetParent(transform);
         this.limitTextGO.transform.localPosition = limitTextGO.transform.localPosition;
-
         SetLimitText();
     }
     void SetLimitText()
@@ -38,37 +34,34 @@ public class Movement : MonoBehaviour
         {
             int nextX = (int)(element.currentPosition.x + direction.x);
             int nextY = (int)(element.currentPosition.y + direction.y);
-            ICanInteract canInteract = element.gridGenerator.gridArray[nextX, nextY].goList[0].GetComponent<ICanInteract>();
-            return canInteract != null ? canInteract.Interaction(gameObject) : false;
+            Element otherElement = element.gridGenerator.gridArray[nextX, nextY].goList[0].GetComponent<Element>();
+            return otherElement.Interaction(gameObject, direction);
         }
         return false;
     }
-    public bool Move(Vector2 direction)//direkt gidilecek yerin konumunu ver
+    public bool Move(Vector2 position)
     {
-        if (limitTextGO)//ifleri düzenle
+        if (limitTextGO && limitCount < 1)
         {
-            if (!(limitCount > 0))
-            {
-                return false;
-            }
+            return false;
         }
         if (enabled)
         {
             int currentX = (int)(element.currentPosition).x;
             int currentY = (int)(element.currentPosition).y;
-            int nextX = (int)(currentX + direction.x);
-            int nextY = (int)(currentY + direction.y);
+            int nextX = (int)(currentX + position.x);
+            int nextY = (int)(currentY + position.y);
 
             element.gridGenerator.gridArray[nextX, nextY].goList.Insert(0, gameObject);
             element.gridGenerator.gridArray[currentX, currentY].goList.Remove(gameObject);
 
-            transform.localPosition += new Vector3(direction.x * 2, direction.y * 2, 0);
+            transform.localPosition += new Vector3(position.x, position.y, 0) * Constants.ELEMENT_SIZE;
             element.currentPosition = new Vector2(nextX, nextY);
             if (limitTextGO)
             {
                 limitCount--;
                 limitText.text = limitCount.ToString();
-                if (!(limitCount > 0))
+                if (limitCount < 1)
                 {
                     element.enabled = false;
                     enabled = false;
@@ -79,10 +72,8 @@ public class Movement : MonoBehaviour
     }
     public void Fall()
     {
-        transform.localPosition += Vector3.forward * 2;
+        transform.localPosition += Vector3.forward * Constants.ELEMENT_SIZE;
         enabled = false;
         hasFallen = true;
-        //enabled = false;
-        //gameManager.Lose();
     }
 }

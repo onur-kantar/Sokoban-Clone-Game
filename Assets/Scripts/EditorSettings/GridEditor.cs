@@ -20,33 +20,14 @@ public class GridEditor : Editor
                 grid.limitCount = EditorGUILayout.IntField("Limit Count: ", grid.limitCount);
             }
         }
-
         if (GUILayout.Button("Update Grid"))
         {
             grid.UpdateGrid();
         }
-
         if (GUILayout.Button("Reset Grid"))
         {
             grid.ResetGrid();
         }
-        //if (GUILayout.Button("Fill Grid Array"))
-        //{
-        //    grid.FillGridArray();
-        //    //grid.LoadGridArray();
-        //}
-
-        //GUILayout.BeginHorizontal();
-        //if (GUILayout.Button("Save Grid"))
-        //{
-        //    grid.SaveGridArray();
-        //}
-        //if (GUILayout.Button("Load Grid"))
-        //{
-        //    grid.FillGridArray();
-        //    //grid.LoadGridArray();
-        //}
-        //GUILayout.EndHorizontal();
     }
 }
 #endif
