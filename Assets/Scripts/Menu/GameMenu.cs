@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
+    [SerializeField] GameObject gameMenuPanel;
     [SerializeField] GameObject winGamePanel;
     [SerializeField] TMP_Text winGameText;
     [SerializeField] GameObject stopGamePanel;
@@ -19,23 +20,21 @@ public class GameMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !winGamePanel.activeSelf)
         {
-            if (stopGamePanel.activeSelf)
-            {
-                gameManager.StartGame();
-                stopGamePanel.SetActive(false);
-            }
-            else
-            {
-                gameManager.StopGame();
-                stopGamePanel.SetActive(true);
-            }
+            ToggleMenu(stopGamePanel);
         }
+    }
+    public void ToggleMenu(GameObject subMenu)
+    {
+        bool activeToggle = gameMenuPanel.activeSelf;
+        gameManager.ToggleGame(activeToggle);
+        gameMenuPanel.SetActive(!activeToggle);
+        subMenu.SetActive(!activeToggle);
     }
     public void ShowWinGamePanel()
     {
         winGameText.text = string.Format(Constants.LEVEL_COMPLATED_TEXT, activeSceneIndex);
         PlayerPrefs.SetInt(Constants.LEVEL_SAVE_NAME, activeSceneIndex + 1);
-        winGamePanel.SetActive(true);
+        ToggleMenu(winGamePanel);
     }
     public void NextLevel()
     {
@@ -47,8 +46,7 @@ public class GameMenu : MonoBehaviour
     }
     public void Continue()
     {
-        gameManager.StartGame();
-        stopGamePanel.SetActive(false);
+        ToggleMenu(stopGamePanel);
     }
     public void Quit()
     {

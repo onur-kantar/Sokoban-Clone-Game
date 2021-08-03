@@ -22,19 +22,13 @@ public class GameManager : MonoBehaviour
     }
     void Win()
     {
-        StopGame();
         gameMenu.ShowWinGamePanel();
     }
-    public void StopGame()
+    public void ToggleGame(bool begin)
     {
         Element[] hingeJoints = GetComponentsInChildren<Element>();
         foreach (Element joint in hingeJoints)
-            joint.enabled = false;
+            joint.enabled = begin;
     }
-    public void StartGame()
-    {
-        Element[] hingeJoints = GetComponentsInChildren<Element>();
-        foreach (Element joint in hingeJoints)
-            joint.enabled = true;
-    }
+
 }
