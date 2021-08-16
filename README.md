@@ -10,7 +10,7 @@ This is the work I did in **7 days** to create a clone of **Sokoban** game.
   * If the ball falls, it cannot move
   * If the box falls, it acts as a bridge
 * Merge with the zone
-* UI
+## UI
   * Main menu
     * New game
     * Continue
