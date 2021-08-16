@@ -1,7 +1,7 @@
 # Sokoban-Clone-Game
 This is the work I did in **7 days** to create a clone of **Sokoban** game.
 
-## Mechanics:
+## Mechanics
 * Grid movement
   * With WASD or arrow keys
   * Push
@@ -30,7 +30,7 @@ I also created a component that allows to easily create playgrounds on the Unity
 
 ![Grid Generator](/VideosAndPhotos/Grid-Generator.png)
 
-## Gameplay:
+## Gameplay
 
 Level 1 | Level 2 | Level 3
 ------------ | ------------- | -------------
