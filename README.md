@@ -1,5 +1,5 @@
 # Sokoban-Clone-Game
-This is the work I did in **7 days** to create a clone of **Sokoban** game.
+This is the work I did in **7 days** to create a clone of **Sokoban** game. Made with **[Unity](https://unity.com/)**.
 
 ## Mechanics
 * Grid movement
