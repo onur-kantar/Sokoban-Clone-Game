@@ -31,6 +31,7 @@ I also created a component that allows to easily create playgrounds on the Unity
 ![Grid Generator](/VideosAndPhotos/Grid-Generator.png)
 
 ## Gameplay
+Try to complete the levels by combining the cubes with their zones.
 
 Level 1 | Level 2 | Level 3
 ------------ | ------------- | -------------
